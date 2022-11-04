@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<!--    <link rel="stylesheet" href="../ws1-partie2/css/style.css" />-->
+    <link rel="manifest" href="manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="../ws1-partie2/images/icons/icon-128x128.png" />
+    <link rel="apple-touch-icon" href="../ws1-partie2/images/icons/icon-256x256.png" />
+    <link rel="apple-touch-icon" href="../ws1-partie2/images/icons/icon-512x512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+    <meta name="theme-color" content="#db4938" />
+    <title>Dev'Coffee PWA</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Nunito:400,700&di");
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #fdfdfd;
+            font-family: "Nunito", sans-serif;
+            font-size: 1rem;
+        }
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        ul {
+            list-style: none;
+            display: flex;
+        }
+        li {
+            margin-right: 1rem;
+        }
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+            grid-gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            padding: 1rem 0;
+        }
+        .card {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 15rem;
+            height: 15rem;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0);
+            border-radius: 10px;
+            margin: auto;
+            overflow: hidden;
+        }
+        .card--avatar {
+            width: 100%;
+            height: 10rem;
+            object-fit: cover;
+        }
+        .card--title {
+
+            color: #222;
+            font-weight: 700;
+            text-transform: capitalize;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+        .card--link {
+            text-decoration: none;
+            background: #db4938;
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <nav>
+        <h1>Dev'Coffee</h1>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Blog</li>
+        </ul>
+    </nav>
+    <div class="container"></div>
+</main>
+<!--<script src="../ws1-partie2/js/app.js"></script>-->
+<script>
+    const container = document.querySelector(".container")
+    const coffees = [
+        { name: "Perspiciatis", image: "images/coffee1.jpg" },
+        { name: "Voluptatem", image: "images/coffee2.jpg" },
+        { name: "Explicabo", image: "images/coffee3.jpg" },
+        { name: "Rchitecto", image: "images/coffee4.jpg" },
+    ]
+
+    const showCoffees = () => {
+        let output = ""
+        coffees.forEach(
+            ({ name, image }) =>
+                (output += `
+<div class="card">
+<img class="card--avatar" src=${image} />
+<h1 class="card--title">${name}</h1>
+<a class="card--link" href="#">Taste</a>
+</div>
+`)
+        )
+        container.innerHTML = output
+    }
+    document.addEventListener("DOMContentLoaded", showCoffees)
+
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+            navigator.serviceWorker
+                .register("/serviceWorker.js")
+                .then(res => console.log("service worker registered"))
+                .catch(err => console.log("service worker not registered", err))
+        })
+    }
+</script>
+</body>
+</html>
